@@ -1,0 +1,97 @@
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>Application Review</title>
+    <script
+      src='https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js'
+    ></script>
+
+    <link
+      rel='stylesheet'
+      href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css'
+    />
+    <style>
+      .certificate { max-width: 600px; margin: 50px auto; padding: 20px; border:
+      2px solid #000; text-align: center; } .logo { max-width: 150px;
+      margin-bottom: 20px; } .title { font-size: 24px; margin-bottom: 10px; }
+      .subtitle { font-size: 18px; margin-bottom: 30px; } .text { font-size:
+      16px; margin-bottom: 10px; } .signature { margin-top: 50px; } .status {
+      font-size: 20px; margin-top: 30px; } .status.accepted { color: green; }
+      .status.rejected { color: red; }
+    </style>
+  </head>
+  <body>
+    <h1 style='color:red'>THis red</h1>
+    {{!-- <div class='certificate'>
+      <h2 class='title'>Review of Application</h2>
+      <h3 class='subtitle'>Dear</h3>
+      <p class='text'>
+        {{#each users as |user|}}
+          {{user.name}}
+        {{/each}}</p>
+      <p class='text'>after completion of the frequency allocation process.</p>
+      <p class='text'>The user has submitted a request for the allocation of a
+        specific frequency. This request is reviewed by the authorized
+        authorities within the organization, and below are the details and
+        current status provided.</p>
+
+      <table class='table table-bordered'>
+        <thead>
+          <tr>
+            <th>Frequency Range</th>
+            <th>Bandwidth</th>
+            <th>License Holder</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>100 MHz - 200 MHz</td>
+            <td>20 MHz</td>
+            <td>Company A</td>
+          </tr>
+          <tr>
+            <td>400 MHz - 600 MHz</td>
+            <td>40 MHz</td>
+            <td>Company B</td>
+          </tr>
+          <!-- Add more rows as needed -->
+        </tbody>
+      </table>
+
+      {{#each users as |user|}}
+        {{#eq user.application_status 'accepted'}}
+          <div class='status accepted'>
+            <strong>Status:</strong>
+            Accepted
+          </div>
+        {{else}}
+          <div class='status rejected'>
+            <strong>Status:</strong>
+            Rejected
+          </div>
+        {{/eq}}
+      {{/each}}
+
+      <div class='signature'>
+        <p class='text'>Issued by:
+          {{#each users as |user|}}
+            {{user.issued_by}}
+          {{/each}}</p>
+        <p class='text'>Frequency Allocation Board</p>
+      </div>
+    </div>
+
+    <script
+      src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'
+    ></script>
+    <script
+      src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js'
+    ></script>
+    <script
+      src='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'
+    ></script> --}}
+
+  </body>
+</html>
