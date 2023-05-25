@@ -4,32 +4,32 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta name='viewport' content='width=device-width, initial-scale=1.0' />
     <title>Application Review</title>
-    <script
-      src='https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js'
-    ></script>
 
     <link
       rel='stylesheet'
-      href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css'
+      href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css'
     />
     <style>
       .certificate { max-width: 600px; margin: 50px auto; padding: 20px; border:
       2px solid #000; text-align: center; } .logo { max-width: 150px;
       margin-bottom: 20px; } .title { font-size: 24px; margin-bottom: 10px; }
-      .subtitle { font-size: 18px; margin-bottom: 30px; } .text { font-size:
+      .subtitle { font-size: 18px; margin-bottom: 20px; } .text { font-size:
       16px; margin-bottom: 10px; } .signature { margin-top: 50px; } .status {
       font-size: 20px; margin-top: 30px; } .status.accepted { color: green; }
-      .status.rejected { color: red; }
+      .status.rejected { color: red; } .unclickable { pointer-events: none;
+      cursor: default; color: inherit; text-decoration: none; }
     </style>
   </head>
   <body>
     <div class='certificate'>
-      <h2 class='title'>Review of Application</h2>
+      <h2 class='title' style='color: red;'>Application Review</h2>
       <h3 class='subtitle'>Dear</h3>
-      <p class='text'>
-        {{#each users as |user|}}
-          {{user.name}}
-        {{/each}}</p>
+      <p class='text' style='font-family: cursive;'>
+        <strong>
+          {{#each users as |user|}}
+            {{user.name}}
+          {{/each}}
+        </strong></p>
       <p class='text'>after completion of the frequency allocation process.</p>
       <p class='text'>The user has submitted a request for the allocation of a
         specific frequency. This request is reviewed by the authorized
@@ -63,12 +63,19 @@
         {{#eq user.application_status 'accepted'}}
           <div class='status accepted'>
             <strong>Status:</strong>
-            Accepted
+
+            <button type='button' class='btn btn-success'>
+              {{user.application_status}}</button>
+
           </div>
         {{else}}
           <div class='status rejected'>
             <strong>Status:</strong>
-            Rejected
+            <button
+              type='button'
+              class='btn btn-danger'
+            >{{user.application_status}}</button>
+
           </div>
         {{/eq}}
       {{/each}}
@@ -79,18 +86,13 @@
             {{user.issued_by}}
           {{/each}}</p>
         <p class='text'>Frequency Allocation Board</p>
+        <a
+          class='unclickable'
+          href='https://fab.gov.pk/'
+        >https://fab.gov.pk/</a>
+
       </div>
     </div>
-
-    <script
-      src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'
-    ></script>
-    <script
-      src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js'
-    ></script>
-    <script
-      src='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'
-    ></script>
 
   </body>
 </html>
