@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import swal from 'sweetalert';
 import { MenuItem } from '@mui/material';
@@ -30,19 +30,28 @@ export default function SignIn() {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
 
-  let navigate = useNavigate();
+  // let navigate = useNavigate();
 
   const handleSubmit = async event => {
     event.preventDefault();
     try {
-      let response = await axios.post(
-        'http://localhost:4000/api/generatePdf',
-        loginData
-      ); //, logIn
-      swal(response.data.message);
-      navigate('/');
+      axios({
+        url: 'http://localhost:4000/api/generatePdf', // Replace with your backend URL
+        method: 'POST',
+        responseType: 'blob', // Use 'blob' to receive binary data
+        data: loginData,
+      }).then(response => {
+        const fileName = response.headers['content-deposition'];
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', fileName); // Specify the filename
+        document.body.appendChild(link);
+        link.click();
+        swal('PDF Generated Succesfully');
+      });
     } catch (error) {
-      swal(error.response.data.message);
+      swal('Something went wrong try again');
     }
   };
 

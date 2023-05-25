@@ -1,20 +1,9 @@
-const { getdataFromDb } = require('../model/dataModel');
-const fs = require('fs');
 const puppeteer = require('puppeteer');
 const path = require('path');
 
 const hbs = require('handlebars');
 
 const fs_extra = require('fs-extra');
-
-// const data = require('../data.json');
-
-// const compile = async function (templateName, data) {
-//   const filePath = path.join(process.cwd(), 'templates', `${templateName}.hbs`);
-
-//   const html = await fs_extra.readFile(filePath, 'utf8');
-//   return hbs.compile(html)(data);
-// };
 
 exports.loadPdf = async (req, res) => {
   try {
@@ -33,7 +22,7 @@ exports.generatePdf = async (req, res) => {
 
     hbs.registerHelper('eq', function (value1, value2, options) {
       return value1 === value2 ? options.fn(this) : options.inverse(this);
-    });
+    }); // helper function of equal condition
 
     const compile = async function (templateName, data) {
       const filePath = path.join(
@@ -58,32 +47,36 @@ exports.generatePdf = async (req, res) => {
 
     const todayDate = new Date();
 
-    await page.pdf({
+    const fileName = todayDate.getTime() + '.pdf';
+    const pdf = await page.pdf({
       printBackground: true,
       format: 'A4',
-      // preferCSSPageSize: true,
-      path: `${path.join(__dirname, '../files', todayDate.getTime() + '.pdf')}`,
+      preferCSSPageSize: true,
+      path: `${path.join(__dirname, '../files', fileName)}`,
     });
 
     // await browser.close();
     console.log('done creating pdf');
-
-    //downloading pdf
-
-    const pdfURL = path.join(
-      __dirname,
-      '../files',
-      todayDate.getTime() + '.pdf'
-    );
-
-    res.download(pdfURL, err => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log('file is downloaded');
-      }
-    });
+    res.contentType('application/pdf');
+    res.setHeader('Content-Deposition', `${fileName}`);
+    res.send(pdf);
   } catch (error) {
     console.log(error);
   }
 };
+
+//downloading pdf using get request
+
+// const pdfURL = path.join(
+//   __dirname,
+//   '../files',
+//   todayDate.getTime() + '.pdf'
+// );
+
+// res.download(pdfURL, err => {
+//   if (err) {
+//     console.log(err);
+//   } else {
+//     console.log('file is downloaded');
+//   }
+// });

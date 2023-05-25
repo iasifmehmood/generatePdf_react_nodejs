@@ -10,13 +10,13 @@ app.set('view engine', 'handlebars');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+const corsOptions = {
+  exposedHeaders: 'Content-Deposition',
+};
+
+app.use(cors(corsOptions));
 
 app.use('/api', userRoutes);
-
-// // handling all unhandled routes
-// app.all('*', (req, _, next) => {
-//   next(new AppError(404, `Can't find ${req.originalUrl} on the server`));
-// });
 
 const port = process.env.port || 5000;
 app.listen(port, () => {
