@@ -17,7 +17,7 @@ import { MenuItem } from '@mui/material';
 
 const theme = createTheme();
 
-export default function SignIn() {
+export default function ReviewApplication() {
   const [loginData, setLoginData] = useState({
     name: '',
     issued_by: '',
@@ -32,8 +32,13 @@ export default function SignIn() {
 
   // let navigate = useNavigate();
 
+  const [buttonColor, setButtonColor] = useState('blue');
+  const [buttonText, setButtonText] = useState('Generate PDF');
+
   const handleSubmit = async event => {
     event.preventDefault();
+    setButtonColor('red');
+    setButtonText('Download File');
     try {
       axios({
         url: 'http://localhost:4000/api/generatePdf', // Replace with your backend URL
@@ -48,7 +53,7 @@ export default function SignIn() {
         link.setAttribute('download', fileName); // Specify the filename
         document.body.appendChild(link);
         link.click();
-        swal('PDF Generated Succesfully');
+        // swal('PDF Generated Succesfully');
       });
     } catch (error) {
       swal('Something went wrong try again');
@@ -77,7 +82,7 @@ export default function SignIn() {
             component='form'
             onSubmit={handleSubmit}
             noValidate
-            sx={{ mt: 1 }}
+            sx={{ mt: 5 }}
           >
             <TextField
               margin='normal'
@@ -129,9 +134,14 @@ export default function SignIn() {
               type='submit'
               fullWidth
               variant='contained'
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2, backgroundColor: buttonColor }}
+              disabled={
+                name.trim() === '' ||
+                issued_by.trim() === '' ||
+                application_status.trim() === ''
+              }
             >
-              Generate PDF
+              {buttonText}
             </Button>
           </Box>
         </Box>

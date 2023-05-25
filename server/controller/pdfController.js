@@ -43,11 +43,26 @@ exports.generatePdf = async (req, res) => {
 
     await page.setContent(content);
 
+    await page.addStyleTag({
+      content: `
+      .userText { font-size: 16px; margin-bottom: 10px; font-family: cursive; }
+          
+          #my-id {
+            background-color: yellow;
+            padding: 10px;
+          }
+        `,
+    });
+
+    // Wait for the styles to be applied
+    await page.waitForTimeout(1000);
+
     await page.setViewport({ width: 1080, height: 1024 });
 
     const todayDate = new Date();
 
     const fileName = todayDate.getTime() + '.pdf';
+
     const pdf = await page.pdf({
       printBackground: true,
       format: 'A4',

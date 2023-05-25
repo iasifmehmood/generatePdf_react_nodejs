@@ -24,7 +24,7 @@
     <div class='certificate'>
       <h2 class='title' style='color: red;'>Application Review</h2>
       <h3 class='subtitle'>Dear</h3>
-      <p class='text' style='font-family: cursive;'>
+      <p class='userText'>
         <strong>
           {{#each users as |user|}}
             {{user.name}}
@@ -81,16 +81,16 @@
       {{/each}}
 
       <div class='signature'>
-        <p class='text'>Issued by:
-          {{#each users as |user|}}
-            {{user.issued_by}}
-          {{/each}}</p>
+        <p class='userText'>Issued by:
+          <strong>
+            {{#each users as |user|}}
+              {{user.issued_by}}
+            {{/each}}</strong></p>
         <p class='text'>Frequency Allocation Board</p>
         <a
           class='unclickable'
           href='https://fab.gov.pk/'
         >https://fab.gov.pk/</a>
-
       </div>
     </div>
 
