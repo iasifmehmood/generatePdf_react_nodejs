@@ -38,7 +38,7 @@ export default function ReviewApplication() {
   const handleSubmit = async event => {
     event.preventDefault();
     setButtonColor('red');
-    setButtonText('Download File');
+    setButtonText('Download Again');
     try {
       axios({
         url: 'http://localhost:4000/api/generatePdf', // Replace with your backend URL
