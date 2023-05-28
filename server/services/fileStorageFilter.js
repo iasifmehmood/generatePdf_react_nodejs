@@ -26,7 +26,7 @@ exports.fileStorage = multer.diskStorage({
 
 exports.fileFilter = (req, file, cb) => {
   if (file.mimetype === 'application/pdf') {
-    console.log(file);
+    // console.log(file);
     // console.log('pdf');
     const filePath = './files/file-' + file.originalname;
 

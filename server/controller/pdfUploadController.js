@@ -19,7 +19,7 @@ exports.fileUpload = (req, res) => {
         // Check if the file with the same name already exists
 
         if (req.fileExists)
-          return res.status(400).json({
+          return res.status(403).json({
             status: 'fail',
             message: `Uploading has failed because ${req.fileExists} file already exists.  `,
             err,

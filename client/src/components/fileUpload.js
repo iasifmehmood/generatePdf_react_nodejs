@@ -1,107 +1,49 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import useFileUpload from 'react-use-file-upload';
+import swal from 'sweetalert';
 
-export default function Upload() {
-  const {
-    files,
-    fileNames,
-    fileTypes,
-    totalSize,
-    totalSizeInBytes,
-    handleDragDropEvent,
-    clearAllFiles,
-    createFormData,
-    setFiles,
-    removeFile,
-  } = useFileUpload();
+const Upload = () => {
+  const [selectedFile, setSelectedFile] = useState(null);
 
-  const inputRef = useRef();
+  const handleFileChange = event => {
+    setSelectedFile(event.target.files[0]);
+  };
 
-  const handleSubmit = async e => {
-    e.preventDefault();
+  const handleSubmit = async event => {
+    event.preventDefault();
 
-    const formData = createFormData();
+    const formData = new FormData();
+    formData.append('file', selectedFile);
 
     try {
-      let response = axios.post('http://localhost:4000/api/upload', formData, {
-        'content-type': 'multipart/form-data',
-      });
-      console.log(response.data.message);
+      const response = await axios.post(
+        'http://localhost:5000/api/upload',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+      swal(`${response.data.message}`);
+
+      console.log(response.data.message); // Handle the response from the server
     } catch (error) {
-      console.error('Failed to submit files.');
+      swal(`${error.response.data.message}`);
+
+      console.error(error.response.data.message);
     }
   };
 
   return (
-    <div css={CSS}>
-      <h1>Upload Files</h1>
-
-      <p>
-        Please use the form to your right to upload any file(s) of your
-        choosing.
-      </p>
-
-      <div className='form-container'>
-        {/* Display the files to be uploaded */}
-        <div>
-          <ul>
-            {fileNames.map(name => (
-              <li key={name}>
-                <span>{name}</span>
-
-                <span onClick={() => removeFile(name)}>
-                  <i className='fa fa-times' />
-                </span>
-              </li>
-            ))}
-          </ul>
-
-          {files.length > 0 && (
-            <ul>
-              <li>File types found: {fileTypes.join(', ')}</li>
-              <li>Total Size: {totalSize}</li>
-              <li>Total Bytes: {totalSizeInBytes}</li>
-
-              <li className='clear-all'>
-                <button onClick={() => clearAllFiles()}>Clear All</button>
-              </li>
-            </ul>
-          )}
-        </div>
-
-        {/* Provide a drop zone and an alternative button inside it to upload files. */}
-        <div
-          onDragEnter={handleDragDropEvent}
-          onDragOver={handleDragDropEvent}
-          onDrop={e => {
-            handleDragDropEvent(e);
-            setFiles(e, 'a');
-          }}
-        >
-          <p>Drag and drop files here</p>
-
-          <button onClick={() => inputRef.current.click()}>
-            Or select files to upload
-          </button>
-
-          {/* Hide the crappy looking default HTML input */}
-          <input
-            ref={inputRef}
-            type='file'
-            multiple
-            style={{ display: 'none' }}
-            onChange={e => {
-              setFiles(e, 'a');
-              inputRef.current.value = null;
-            }}
-          />
-        </div>
-      </div>
-
-      <div className='submit'>
-        <button onClick={handleSubmit}>Submit</button>
-      </div>
+    <div>
+      <h2>File Upload</h2>
+      <form onSubmit={handleSubmit}>
+        <input type='file' onChange={handleFileChange} required />
+        <button type='submit'>Upload</button>
+      </form>
     </div>
   );
-}
+};
+
+export default Upload;
