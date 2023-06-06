@@ -7,7 +7,7 @@ const session = require('express-session');
 
 const userRoutes = require('./route/pdfRoutes.js');
 const googleRoute = require('./route/googleRoutes.js');
-
+const facebookRoute = require('./route/facebookRoutes.js');
 /**********************POST API ************************** */
 app.set('view engine', 'handlebars');
 app.use(express.json());
@@ -33,6 +33,7 @@ app.use(cors(corsOptions));
 
 app.use('/api', userRoutes);
 app.use('/', googleRoute);
+app.use('/', facebookRoute);
 
 const port = process.env.port || 5000;
 app.listen(port, () => {
