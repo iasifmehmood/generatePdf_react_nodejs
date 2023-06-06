@@ -1,6 +1,7 @@
-# generatePdf_react_nodejs
-
 #Task: Signup with Google and Facebook
+
+#Frontend simple html file
+#Sign up using passport.js
 
 .env variables
 
